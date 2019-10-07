@@ -37,11 +37,11 @@ public class ClientGui extends Thread{
     String fontfamily = "Arial, sans-serif";
     Font font = new Font(fontfamily, Font.PLAIN, 15);
 
-    final JFrame jfr = new JFrame("Chat");
-    jfr.getContentPane().setLayout(null);
-    jfr.setSize(700, 500);
-    jfr.setResizable(false);
-    jfr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    final JFrame frame = new JFrame("Chat");
+    frame.getContentPane().setLayout(null);
+    frame.setSize(700, 500);
+    frame.setResizable(false);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Module du fil de discussion
     jtextFilDiscu.setBounds(25, 25, 490, 320);
@@ -113,54 +113,49 @@ public class ClientGui extends Thread{
     });
 
     // Connection view
-    final JTextField jtfName = new JTextField(this.name);
-    final JTextField jtfport = new JTextField(Integer.toString(this.PORT));
-    final JTextField jtfAddr = new JTextField(this.serverName);
-    final JButton jcbtn = new JButton("Connect");
+    final JTextField userNameField = new JTextField(this.name);
+    final JTextField poortField = new JTextField(Integer.toString(this.PORT));
+    final JTextField servernameField = new JTextField(this.serverName);
+    final JButton connectButton = new JButton("Connect");
 
     // check if those field are not empty
-    jtfName.getDocument().addDocumentListener(new TextListener(jtfName, jtfport, jtfAddr, jcbtn));
-    jtfport.getDocument().addDocumentListener(new TextListener(jtfName, jtfport, jtfAddr, jcbtn));
-    jtfAddr.getDocument().addDocumentListener(new TextListener(jtfName, jtfport, jtfAddr, jcbtn));
+    userNameField.getDocument().addDocumentListener(new TextListener(userNameField, poortField, servernameField, connectButton));
+    poortField.getDocument().addDocumentListener(new TextListener(userNameField, poortField, servernameField, connectButton));
+    servernameField.getDocument().addDocumentListener(new TextListener(userNameField, poortField, servernameField, connectButton));
 
     // position des Modules
-    jcbtn.setFont(font);
-    jtfAddr.setBounds(25, 380, 135, 40);
-    jtfName.setBounds(375, 380, 135, 40);
-    jtfport.setBounds(200, 380, 135, 40);
-    jcbtn.setBounds(575, 380, 100, 40);
+    connectButton.setFont(font);
+    servernameField.setBounds(25, 380, 135, 40);
+    userNameField.setBounds(375, 380, 135, 40);
+    poortField.setBounds(200, 380, 135, 40);
+    connectButton.setBounds(575, 380, 100, 40);
 
     // couleur par defaut des Modules fil de discussion et liste des utilisateurs
     jtextFilDiscu.setBackground(Color.LIGHT_GRAY);
     jtextListUsers.setBackground(Color.LIGHT_GRAY);
 
     // ajout des éléments
-    jfr.add(jcbtn);
-    jfr.add(jtextFilDiscuSP);
-    jfr.add(jsplistuser);
-    jfr.add(jtfName);
-    jfr.add(jtfport);
-    jfr.add(jtfAddr);
-    jfr.setVisible(true);
+    frame.add(connectButton);
+    frame.add(jtextFilDiscuSP);
+    frame.add(jsplistuser);
+    frame.add(userNameField);
+    frame.add(poortField);
+    frame.add(servernameField);
+    frame.setVisible(true);
 
 
     // info sur le Chat
 
     // On connect
-    jcbtn.addActionListener(new ActionListener() {
+    connectButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
         try {
-          name = jtfName.getText();
-          String port = jtfport.getText();
-          serverName = jtfAddr.getText();
+          name = userNameField.getText();
+          String port = poortField.getText();
+          serverName = servernameField.getText();
           PORT = Integer.parseInt(port);
 
-          appendToPane(jtextFilDiscu, "<span>Connecting to " + serverName + " on port " + PORT + "...</span>");
           server = new Socket(serverName, PORT);
-
-          appendToPane(jtextFilDiscu, "<span>Connected to " +
-              server.getRemoteSocketAddress()+"</span>");
-
           input = new BufferedReader(new InputStreamReader(server.getInputStream()));
           output = new PrintWriter(server.getOutputStream(), true);
 
@@ -170,20 +165,20 @@ public class ClientGui extends Thread{
           // create new Read Thread
           read = new Read();
           read.start();
-          jfr.remove(jtfName);
-          jfr.remove(jtfport);
-          jfr.remove(jtfAddr);
-          jfr.remove(jcbtn);
-          jfr.add(jsbtn);
-          jfr.add(jtextInputChatSP);
-          jfr.add(jsbtndeco);
-          jfr.revalidate();
-          jfr.repaint();
+          frame.remove(userNameField);
+          frame.remove(poortField);
+          frame.remove(servernameField);
+          frame.remove(connectButton);
+          frame.add(jsbtn);
+          frame.add(jtextInputChatSP);
+          frame.add(jsbtndeco);
+          frame.revalidate();
+          frame.repaint();
           jtextFilDiscu.setBackground(Color.WHITE);
           jtextListUsers.setBackground(Color.WHITE);
         } catch (Exception ex) {
           appendToPane(jtextFilDiscu, "<span>Could not connect to Server</span>");
-          JOptionPane.showMessageDialog(jfr, ex.getMessage());
+          JOptionPane.showMessageDialog(frame, ex.getMessage());
         }
       }
 
@@ -192,15 +187,15 @@ public class ClientGui extends Thread{
     // on deco
     jsbtndeco.addActionListener(new ActionListener()  {
       public void actionPerformed(ActionEvent ae) {
-        jfr.add(jtfName);
-        jfr.add(jtfport);
-        jfr.add(jtfAddr);
-        jfr.add(jcbtn);
-        jfr.remove(jsbtn);
-        jfr.remove(jtextInputChatSP);
-        jfr.remove(jsbtndeco);
-        jfr.revalidate();
-        jfr.repaint();
+        frame.add(userNameField);
+        frame.add(poortField);
+        frame.add(servernameField);
+        frame.add(connectButton);
+        frame.remove(jsbtn);
+        frame.remove(jtextInputChatSP);
+        frame.remove(jsbtndeco);
+        frame.revalidate();
+        frame.repaint();
         read.interrupt();
         jtextListUsers.setText(null);
         jtextFilDiscu.setBackground(Color.LIGHT_GRAY);
@@ -217,13 +212,13 @@ public class ClientGui extends Thread{
     JTextField jtf1;
     JTextField jtf2;
     JTextField jtf3;
-    JButton jcbtn;
+    JButton connectButton;
 
-    public TextListener(JTextField jtf1, JTextField jtf2, JTextField jtf3, JButton jcbtn){
+    public TextListener(JTextField jtf1, JTextField jtf2, JTextField jtf3, JButton connectButton){
       this.jtf1 = jtf1;
       this.jtf2 = jtf2;
       this.jtf3 = jtf3;
-      this.jcbtn = jcbtn;
+      this.connectButton = connectButton;
     }
 
     public void changedUpdate(DocumentEvent e) {}
@@ -233,9 +228,9 @@ public class ClientGui extends Thread{
           jtf2.getText().trim().equals("") ||
           jtf3.getText().trim().equals("")
           ){
-        jcbtn.setEnabled(false);
+        connectButton.setEnabled(false);
       }else{
-        jcbtn.setEnabled(true);
+        connectButton.setEnabled(true);
       }
     }
     public void insertUpdate(DocumentEvent e) {
@@ -243,9 +238,9 @@ public class ClientGui extends Thread{
           jtf2.getText().trim().equals("") ||
           jtf3.getText().trim().equals("")
           ){
-        jcbtn.setEnabled(false);
+        connectButton.setEnabled(false);
       }else{
-        jcbtn.setEnabled(true);
+        connectButton.setEnabled(true);
       }
     }
 
