@@ -17,17 +17,22 @@ import java.util.Arrays;
 
 public class ClientGui extends Thread{
 
-  final JTextPane jtextFilDiscu = new JTextPane();
-  final JTextPane jtextListUsers = new JTextPane();
-  final JTextField jtextInputChat = new JTextField();
-  private String oldMsg = "";
-  private Thread read;
-  private String serverName;
-  private int PORT;
-  private String name;
-  BufferedReader input;
-  PrintWriter output;
-  Socket server;
+    // fields
+    final JTextPane jtextFilDiscu = new JTextPane();
+    final JTextPane jtextListUsers = new JTextPane();
+    final JTextField jtextInputChat = new JTextField();
+    private String oldMsg = "";
+    private Thread read;
+    private String serverName;
+    private int PORT;
+    private String name;
+    BufferedReader input;
+    PrintWriter output;
+    Socket server;
+
+  public static void main(String[] args) throws Exception {
+    ClientGui client = new ClientGui();
+  }
 
   public ClientGui() {
     this.serverName = "localhost";
@@ -261,10 +266,6 @@ public class ClientGui extends Thread{
       JOptionPane.showMessageDialog(null, ex.getMessage());
       System.exit(0);
     }
-  }
-
-  public static void main(String[] args) throws Exception {
-    ClientGui client = new ClientGui();
   }
 
   // read new incoming messages
