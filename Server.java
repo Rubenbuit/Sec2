@@ -46,15 +46,24 @@ public class Server {
 
       // create new User
       User newUser = new User(client, nickname);
-      newUser.CreatePublicKey();
+      newUser.createPublicKey();
+      newUser.createPrivateKey();
       // add newUser message to list
       this.clients.add(newUser);
-
+      this.sendPublicKey(newUser);
       // Welcome msg
       newUser.getOutStream().println("Welcome");
 
       // create a new thread for newUser incoming messages handling
       new Thread(new UserHandler(this, newUser)).start();
+    }
+  }
+
+  public void sendPublicKey(User sender){
+    for(User client : this.clients){
+      if(client != sender){
+        this.sendMessageToUser(sender.publicKey, client, sender.getNickname());
+    }
     }
   }
 
