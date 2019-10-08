@@ -22,6 +22,7 @@ public class User  {
   private Socket client;
   private String color;
   public String publicKey;
+  public String privateKey;
 
   // constructor
   public User(Socket client, String name) throws IOException {
@@ -42,12 +43,20 @@ public class User  {
     return this.streamIn;
   }
 
-  public void CreatePublicKey() {
+  public void createPublicKey() {
     Random rand = new Random();
     int n = rand.nextInt(50);
 
     this.publicKey = Integer.toString(n);
   }
+
+  public void createPrivateKey() {
+    Random rand = new Random();
+    int n = rand.nextInt(50);
+
+    this.privateKey = Integer.toString(n);
+  }
+
   public String getNickname(){
     return this.nickname;
   }
@@ -59,25 +68,4 @@ public class User  {
       +"'>" + this.getNickname() + "</span></u>";
 
   }
-}
-
-class ColorInt {
-    public static String[] mColors = {
-            "#3079ab", // dark blue
-            "#e15258", // red
-            "#f9845b", // orange
-            "#7d669e", // purple
-            "#53bbb4", // aqua
-            "#51b46d", // green
-            "#e0ab18", // mustard
-            "#f092b0", // pink
-            "#e8d174", // yellow
-            "#e39e54", // orange
-            "#d64d4d", // red
-            "#4d7358", // green
-    };
-
-    public static String getColor(int i) {
-        return mColors[i % mColors.length];
-    }
 }
