@@ -46,11 +46,8 @@ public class Server {
 
       // create new User
       User newUser = new User(client, nickname);
-      newUser.createPublicKey();
-      newUser.createPrivateKey();
       // add newUser message to list
       this.clients.add(newUser);
-      this.sendPublicKey(newUser);
       // Welcome msg
       newUser.getOutStream().println("Welcome");
 
@@ -62,7 +59,11 @@ public class Server {
   public void sendPublicKey(User sender){
     for(User client : this.clients){
       if(client != sender){
-        this.sendMessageToUser(sender.publicKey, client, sender.getNickname());
+    //    this.sendMessageToUser(sender.public, client, sender.getNickname());
+        client.getOutStream().println(
+            "(<b>Private</b>)" + sender.toString() + "<span>: " + sender.publicKey+"</span>");
+
+
     }
     }
   }
@@ -74,9 +75,15 @@ public class Server {
 
   // send incoming msg to all Users
   public void broadcastMessages(String msg, User userSender) {
+    String temp = userSender.getEncryptedMessage(msg);
     for (User client : this.clients) {
+     String temp2   = client.getDecryptedMessage(temp);
       client.getOutStream().println(
-          userSender.toString() + "<span>: " + msg+"</span>");
+         userSender.toString() + "<span>: " + temp2 +"</span>");
+
+  //  for (User client : this.clients) {
+    //  client.getOutStream().println(
+      //    userSender.toString() + "<span>: " + msg+"</span>");
     }
   }
 

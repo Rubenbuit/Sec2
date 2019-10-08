@@ -3,6 +3,8 @@ import java.io.ObjectOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
+
+
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,8 @@ public class User  {
   private Socket client;
   private String color;
   public String publicKey;
-  public String privateKey;
+  private String privateKey;
+  Rsa rsa = new Rsa();
 
   // constructor
   public User(Socket client, String name) throws IOException {
@@ -33,6 +36,10 @@ public class User  {
     this.userId = nbUser;
     this.color = ColorInt.getColor(this.userId);
     nbUser += 1;
+
+
+    this.publicKey = rsa.createPublicKey();
+    this.privateKey=  rsa.createPrivateKey();
   }
   // getteur
   public PrintStream getOutStream(){
@@ -43,18 +50,16 @@ public class User  {
     return this.streamIn;
   }
 
-  public void createPublicKey() {
-    Random rand = new Random();
-    int n = rand.nextInt(50);
-
-    this.publicKey = Integer.toString(n);
+  public String getEncryptedMessage(String message){
+    	return this.rsa.encryptmessage(this.privateKey, message);
   }
 
-  public void createPrivateKey() {
-    Random rand = new Random();
-    int n = rand.nextInt(50);
+  public String getDecryptedMessage(String message){
+    return rsa.decryptmessage(this.publicKey, message);
+  }
 
-    this.privateKey = Integer.toString(n);
+  public String getPublicKey(){
+    return this.publicKey;
   }
 
   public String getNickname(){
