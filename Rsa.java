@@ -34,5 +34,30 @@ private String anciiToChar( int message){
   return Character.toString((char)message);
 }
 
+private int createPrimeNumber(){
+  boolean isPrimeFound = false;
+  Random r = new Random();
+  int primeNumber = 0;
+  while(isPrimeFound == false)
+  {
+    int testPrimeNumber = r.nextInt(50);
+    if( isPrime(testPrimeNumber) == true)
+    {
+      isPrimeFound = true;
+      primeNumber = testPrimeNumber;
+    }
+  }
+  System.out.println("priem: "+primeNumber);
+  return primeNumber;
+}
+
+private static boolean isPrime(int inputNum){
+      if (inputNum <= 3 || inputNum % 2 == 0)
+          return inputNum == 2 || inputNum == 3;
+      int divisor = 3;
+      while ((divisor <= Math.sqrt(inputNum)) && (inputNum % divisor != 0))
+          divisor += 2;
+      return inputNum % divisor != 0;
+  }
 
 }
