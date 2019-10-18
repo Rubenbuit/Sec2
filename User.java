@@ -25,6 +25,10 @@ public class User  {
   private String color;
   public String publicKey;
   private String privateKey;
+  private int modulesNumber;
+  private int primenumberA;
+  private int primeNumberB;
+  private int commonFactor;
   Rsa rsa = new Rsa();
 
   // constructor
@@ -37,10 +41,13 @@ public class User  {
     this.color = ColorInt.getColor(this.userId);
     nbUser += 1;
 
-
+    this.primeNumberA = rsa.createPrimeNumber();
+    this.primeNumberB = rsa.createPrimeNumber();
+    this.modulesNumber = this.primeNumberA * this.primeNumberB;
+    this.commonFactor = (this.primeNumberA -1) *(this.primeNumberB -1);
     this.publicKey = rsa.createPublicKey();
-    this.privateKey=  rsa.createPrivateKey();
-  }
+
+}
   // getteur
   public PrintStream getOutStream(){
     return this.streamOut;

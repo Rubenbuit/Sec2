@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.*;
 
 public class Rsa{
 
@@ -6,22 +7,28 @@ public String encryptmessage(String privateKey, String message){
   for(int i = 0; i< message.length();i++){
     int x = charToAnciiInt(message.charAt(i));
   }
-return "done"
+return "done";
 }
 
 public String decryptmessage(String publicKey, String message){
   return( publicKey +message + "decrypt");
 }
 
-public String createPrivateKey(){
-  return "A";
+public String createPrivateKey(int ggd, int modules)
+{
+  List<Integer> possiblePrivateKeyNumber = new ArrayList<Integer>();
+  for(int i = 2; i< ggd; i++)
+  {
+      possiblePrivateKeyNumber.add(i);
+  }
+
+  //coprime zoeken
+  return "lol";
 }
 
 public String createPublicKey(){
-  //Random rand = new Random();
-  //int n = rand.nextInt(50);
-  //return Integer.toString(n);
-  return "B";
+  int publickey = createPrimeNumber();
+  return Integer.toString(publickey);
 }
 
 //converting a string into int
@@ -40,14 +47,13 @@ private int createPrimeNumber(){
   int primeNumber = 0;
   while(isPrimeFound == false)
   {
-    int testPrimeNumber = r.nextInt(50);
+    int testPrimeNumber = r.nextInt(15);
     if( isPrime(testPrimeNumber) == true)
     {
       isPrimeFound = true;
       primeNumber = testPrimeNumber;
     }
   }
-  System.out.println("priem: "+primeNumber);
   return primeNumber;
 }
 
@@ -59,5 +65,8 @@ private static boolean isPrime(int inputNum){
           divisor += 2;
       return inputNum % divisor != 0;
   }
+
+
+
 
 }
