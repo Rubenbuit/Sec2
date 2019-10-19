@@ -14,16 +14,19 @@ public String decryptmessage(String publicKey, String message){
   return( publicKey +message + "decrypt");
 }
 
-public String createPrivateKey(int ggd, int modules)
+public int createPrivateKey(int ggd, int modules)
 {
-  List<Integer> possiblePrivateKeyNumber = new ArrayList<Integer>();
+  List<Integer> privateKey = new ArrayList<Integer>();
   for(int i = 2; i< ggd; i++)
   {
-      possiblePrivateKeyNumber.add(i);
+      if(modules % i != 0){
+      privateKey.add(i);
+      System.out.println("added number:"  +i );
+    }
   }
 
   //coprime zoeken
-  return "lol";
+  return privateKey.get(privateKey.size()-1);
 }
 
 public String createPublicKey(){
@@ -41,7 +44,7 @@ private String anciiToChar( int message){
   return Character.toString((char)message);
 }
 
-private int createPrimeNumber(){
+public int createPrimeNumber(){
   boolean isPrimeFound = false;
   Random r = new Random();
   int primeNumber = 0;

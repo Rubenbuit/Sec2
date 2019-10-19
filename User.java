@@ -24,10 +24,10 @@ public class User  {
   private Socket client;
   private String color;
   public String publicKey;
-  private String privateKey;
+  private int privateKey;
   private int modulesNumber;
-  private int primenumberA;
-  private int primeNumberB;
+  private int primeNumberA ;
+  private int primeNumberB ;
   private int commonFactor;
   Rsa rsa = new Rsa();
 
@@ -41,11 +41,17 @@ public class User  {
     this.color = ColorInt.getColor(this.userId);
     nbUser += 1;
 
-    this.primeNumberA = rsa.createPrimeNumber();
-    this.primeNumberB = rsa.createPrimeNumber();
-    this.modulesNumber = this.primeNumberA * this.primeNumberB;
-    this.commonFactor = (this.primeNumberA -1) *(this.primeNumberB -1);
-    this.publicKey = rsa.createPublicKey();
+    primeNumberA = rsa.createPrimeNumber();
+    primeNumberB = rsa.createPrimeNumber();
+    modulesNumber = primeNumberA * primeNumberB;
+    commonFactor = (primeNumberA -1) *(primeNumberB -1);
+    System.out.println("ggd: " +commonFactor);
+    System.out.println("primeA: " +primeNumberA +" primeB: "+primeNumberB);
+    System.out.println("modulesnumber: " + modulesNumber );
+
+    privateKey = rsa.createPrivateKey(commonFactor, modulesNumber);
+    System.out.println("privatekey: "+ privateKey);
+    publicKey = rsa.createPublicKey();
 
 }
   // getteur
@@ -58,7 +64,8 @@ public class User  {
   }
 
   public String getEncryptedMessage(String message){
-    	return this.rsa.encryptmessage(this.privateKey, message);
+    //	return this.rsa.encryptmessage(this.privateKey, message);
+    return("hoi");
   }
 
   public String getDecryptedMessage(String message){
