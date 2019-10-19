@@ -91,7 +91,7 @@ public class Server {
   public void broadcastAllUsers(){
     for (User client : this.clients) {
       client.getOutStream().println(this.clients);
-      System.out.println(client.publicKey);
+//      System.out.println(client.publicKey);
     }
   }
 

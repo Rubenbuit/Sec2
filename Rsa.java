@@ -3,11 +3,18 @@ import java.util.*;
 
 public class Rsa{
 
-public String encryptmessage(String privateKey, String message){
+public String encryptmessage(int privateKey,int publicKey, String message){
+  String restult="";
   for(int i = 0; i< message.length();i++){
-    int x = charToAnciiInt(message.charAt(i));
+    Double ancii = charToAnciiInt(message.charAt(i));
+    Double privateKeyd = Double.valueOf(privateKey);
+    double publicKeyd= Double.valueOf(publicKey);
+    System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
+    Double encryptedMessage = (Math.pow(ancii, privateKeyd))%publicKeyd;
+
+    restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
   }
-return "done";
+return restult;
 }
 
 public String decryptmessage(String publicKey, String message){
@@ -19,24 +26,18 @@ public int createPrivateKey(int ggd, int modules)
   List<Integer> privateKey = new ArrayList<Integer>();
   for(int i = 2; i< ggd; i++)
   {
-      if(modules % i != 0){
-      privateKey.add(i);
-      System.out.println("added number:"  +i );
-    }
+      if(modules % i != 0)
+      {
+        privateKey.add(i);
+  //      System.out.println("added number:"  +i );
+      }
   }
-
-  //coprime zoeken
   return privateKey.get(privateKey.size()-1);
 }
 
-public String createPublicKey(){
-  int publickey = createPrimeNumber();
-  return Integer.toString(publickey);
-}
-
 //converting a string into int
-private int charToAnciiInt( char message){
-  return (int) message;
+private double charToAnciiInt( char message){
+  return (double) message;
 }
 
 //convert int back to string
@@ -50,7 +51,7 @@ public int createPrimeNumber(){
   int primeNumber = 0;
   while(isPrimeFound == false)
   {
-    int testPrimeNumber = r.nextInt(15);
+    int testPrimeNumber = r.nextInt(13);
     if( isPrime(testPrimeNumber) == true)
     {
       isPrimeFound = true;
