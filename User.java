@@ -67,16 +67,16 @@ public class User  {
 
   public String getEncryptedMessage(String message)
   {
-    String result =  rsa.encryptmessage(privateKey, publicKey, message);
-    String decryptmessage = rsa.decryptmessage(privateKey, publicKey, result);
-    return ("test");
-  //  return rsa.encryptmessage(privateKey, publicKey, message);
+
+   return rsa.encryptmessage(privateKey, publicKey, message);
 
   }
 
   public String getDecryptedMessage(String message){
 
-  return "hoi";
+
+    return rsa.decryptmessage(privateKey, publicKey, message);
+
   }
 
   public int getPublicKey(){

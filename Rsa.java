@@ -9,11 +9,12 @@ public String encryptmessage(int privateKey,int publicKey, String message){
     double ancii = charToAnciiInt(message.charAt(i));
     double privateKeyd = Double.valueOf(privateKey);
     double publicKeyd= Double.valueOf(publicKey);
-  //  System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
     double encryptedMessage = (Math.pow(ancii, privateKeyd))%publicKeyd;
-    System.out.println(Math.round(encryptedMessage) + "verstuurd bericht");
-//    "tempsss"
-    restult +=( String.valueOf(Math.round(encryptedMessage)));
+
+    System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
+    System.out.println("verstuurd bericht: " + encryptedMessage);
+
+    restult +=( String.valueOf(Math.round(encryptedMessage)));// temp
 //    restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
   }
 return restult;
@@ -25,8 +26,8 @@ public String decryptmessage(int privateKey, int publicKey, String message){
    double publicKeyd= Double.valueOf(publicKey);
    double decryptmessage = (Math.pow(message_, privateKeyd)%publicKeyd);
    String restult = anciiToChar(decryptmessage);
-   System.out.println( "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
-   System.out.println(" int valuue is decryptmessage: " + decryptmessage);
+   System.out.println("message: "+ message_ + "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
+   System.out.println("restul: "+ decryptmessage);
    return( restult);
 
 }
@@ -47,12 +48,18 @@ public int createPrivateKey(int ggd, int modules)
 
 //converting a string into int
 private double charToAnciiInt( char message){
-  return (double) message;
+   if(message == 'a'){return 2;}
+   else if( message == 'b'){ return 3;}
+   else {return 4;}
 }
 
 //convert int back to string
 private String anciiToChar( double message){
+  if(message == 2){return "a";}
+  else if (message ==3 ){return "b";}
+  else{
   return Character.toString((char)message);
+}
 }
 
 public int createPrimeNumber(){
@@ -61,7 +68,7 @@ public int createPrimeNumber(){
   int primeNumber = 0;
   while(isPrimeFound == false)
   {
-    int testPrimeNumber = r.nextInt(13);
+    int testPrimeNumber = r.nextInt(200);
     if( isPrime(testPrimeNumber) == true)
     {
       isPrimeFound = true;

@@ -78,8 +78,10 @@ public class Server {
     String temp = userSender.getEncryptedMessage(msg);
     for (User client : this.clients) {
      String temp2   = client.getDecryptedMessage(temp);
+      userSender.getOutStream().println(
+         userSender.toString() + "<span>: " +"encryptedMessage: " +temp  +"</span>");
       client.getOutStream().println(
-         userSender.toString() + "<span>: " + temp2 +"</span>");
+         userSender.toString() + "<span>: " +"decryptmessage: " +temp2  +"</span>");
 
   //  for (User client : this.clients) {
     //  client.getOutStream().println(
