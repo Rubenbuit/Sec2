@@ -27,7 +27,7 @@ public class User  {
   private int privateKey;
   private int modulesNumber;
   private int primeNumberA =7 ;
-  private int primeNumberB  =5;
+  private int primeNumberB  =2;
   private int commonFactor;
   Rsa rsa = new Rsa();
 
@@ -48,12 +48,13 @@ public class User  {
 
     publicKey = modulesNumber;
     privateKey = rsa.createPrivateKey(commonFactor, modulesNumber);
+    /*
     System.out.println("ggd: " +commonFactor);
     System.out.println("primeA: " +primeNumberA +" primeB: "+primeNumberB);
     System.out.println("modules: " +modulesNumber);
     System.out.println("publickey: " + publicKey );
     System.out.println("privatekey: "+ privateKey);
-
+*/
 }
   // getteur
   public PrintStream getOutStream(){
@@ -66,12 +67,16 @@ public class User  {
 
   public String getEncryptedMessage(String message)
   {
-    return rsa.encryptmessage(privateKey, publicKey, message);
+    String result =  rsa.encryptmessage(privateKey, publicKey, message);
+    String decryptmessage = rsa.decryptmessage(privateKey, publicKey, result);
+    return ("test");
+  //  return rsa.encryptmessage(privateKey, publicKey, message);
+
   }
 
   public String getDecryptedMessage(String message){
-  //
-  return message;
+
+  return "hoi";
   }
 
   public int getPublicKey(){

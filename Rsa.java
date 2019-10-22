@@ -6,19 +6,29 @@ public class Rsa{
 public String encryptmessage(int privateKey,int publicKey, String message){
   String restult="";
   for(int i = 0; i< message.length();i++){
-    Double ancii = charToAnciiInt(message.charAt(i));
-    Double privateKeyd = Double.valueOf(privateKey);
+    double ancii = charToAnciiInt(message.charAt(i));
+    double privateKeyd = Double.valueOf(privateKey);
     double publicKeyd= Double.valueOf(publicKey);
-    System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
-    Double encryptedMessage = (Math.pow(ancii, privateKeyd))%publicKeyd;
-
-    restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
+  //  System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
+    double encryptedMessage = (Math.pow(ancii, privateKeyd))%publicKeyd;
+    System.out.println(Math.round(encryptedMessage) + "verstuurd bericht");
+//    "tempsss"
+    restult +=( String.valueOf(Math.round(encryptedMessage)));
+//    restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
   }
 return restult;
 }
 
-public String decryptmessage(String publicKey, String message){
-  return( publicKey +message + "decrypt");
+public String decryptmessage(int privateKey, int publicKey, String message){
+   double message_ = Double.valueOf(message);
+   double privateKeyd = 11;
+   double publicKeyd= Double.valueOf(publicKey);
+   double decryptmessage = (Math.pow(message_, privateKeyd)%publicKeyd);
+   String restult = anciiToChar(decryptmessage);
+   System.out.println( "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
+   System.out.println(" int valuue is decryptmessage: " + decryptmessage);
+   return( restult);
+
 }
 
 public int createPrivateKey(int ggd, int modules)
@@ -41,7 +51,7 @@ private double charToAnciiInt( char message){
 }
 
 //convert int back to string
-private String anciiToChar( int message){
+private String anciiToChar( double message){
   return Character.toString((char)message);
 }
 
