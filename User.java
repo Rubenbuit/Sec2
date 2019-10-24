@@ -30,6 +30,7 @@ public class User  {
   private int primeNumberB  =2;
   private int commonFactor;
   Rsa rsa = new Rsa();
+  Wiskunde w = new Wiskunde();
 
   // constructor
   public User(Socket client, String name) throws IOException {
@@ -74,7 +75,7 @@ public class User  {
 
   public String getDecryptedMessage(String message){
 
-
+    // private key voor decrypten omet nog verzonnen worden
     return rsa.decryptmessage(privateKey, publicKey, message);
 
   }
