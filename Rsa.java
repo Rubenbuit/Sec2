@@ -7,10 +7,13 @@ Wiskunde math = new Wiskunde();
 
 public String encryptmessage(String message, int otherPublicKey, int otherModules)
 {
+  System.out.println("op: "+ otherPublicKey + " om: "+otherModules);
   String result="";
   for(int i = 0; i< message.length();i++)
   {
     int ancii = math.charToAnciiInt(message.charAt(i));
+    System.out.println("char value is: " + ancii);
+    System.out.println("power of is: " +math.powerOfN(ancii, otherPublicKey));
     long encryptedChar = (math.powerOfN(ancii, otherPublicKey))%otherModules;
     System.out.println("char verstuurd" +encryptedChar);
     result +=( String.valueOf(Math.round(encryptedChar))+ ",");

@@ -51,13 +51,13 @@ public class User  {
     commonFactor = (primeNumberA -1) *(primeNumberB -1);
     myPublicKey = 5;
     myPrivateKey = rsa.createPrivateKey(myPublicKey,commonFactor);
-/*
+
     System.out.println("ggd: " +commonFactor);
     System.out.println("primeA: " +primeNumberA +" primeB: "+primeNumberB);
     System.out.println("modules: " +myModules);
     System.out.println("publickey: " + myPublicKey);
     System.out.println("privatekey: "+ myPrivateKey);
-*/
+
 }
 
   public PrintStream getOutStream(){
