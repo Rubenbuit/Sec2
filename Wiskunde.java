@@ -91,7 +91,7 @@ public class Wiskunde{
     int primeNumber = 0;
     while(isPrimeFound == false)
     {
-      int testPrimeNumber = r.nextInt(15);
+      int testPrimeNumber = r.nextInt(10);
       if( isPrime(testPrimeNumber) == true)
       {
         isPrimeFound = true;

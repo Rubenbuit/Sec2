@@ -12,7 +12,8 @@ public String encryptmessage(String message, int otherPublicKey, int otherModule
   {
     int ancii = math.charToAnciiInt(message.charAt(i));
     long encryptedChar = (math.powerOfN(ancii, otherPublicKey))%otherModules;
-    restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
+    System.out.println(encryptedChar);
+    result +=( String.valueOf(Math.round(encryptedChar))+ ",");
   }
   return result;
 
@@ -20,23 +21,17 @@ public String encryptmessage(String message, int otherPublicKey, int otherModule
 public String decryptmessage(String message, int myPrivateKey, int mypublicModules)
 {
 //  encryptedchar ^ myprivate key  mod  my publicmodules
+ String[] fullMessage = message.split(",");
+ String decryptedMessage = "";
+ for(int i =0; i< fullMessage.length; i++)
+ {
+   int charValueEncrypted = Integer.valueOf(fullMessage[i]);
+   long charValueDecrypted = (math.powerOfN(charValueEncrypted, myPrivateKey) % mypublicModules);
+   System.out.println("math 2"+charValueDecrypted);
+   decryptedMessage += math.anciiToChar(charValueDecrypted);
+ }
+ return decryptedMessage;
 }
-
-public String decryptmessage(int privateKey, int publicKey, String message){
-
-   String[] messageArray = message.split(",");
-   String result= "";
-   for(int i =0; i< messageArray.length; i++)
-   {
-    int message_ = Integer.valueOf(messageArray[i]);
-    long decryptmessage = (math.powerOfN(message_, privateKey)%publicKey);
-    result += math.anciiToChar(decryptmessage);
-  }
-
-  // System.out.println("message: "+ message_ + "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
-//   System.out.println("restul: "+ decryptmessage);
-   return result;
-  }
 
 public int createPrivateKey(int myPublicKey, int myCommonFactor)
 {
@@ -53,8 +48,28 @@ public int createPrivateKey(int myPublicKey, int myCommonFactor)
     }
     else{unknown +=1;}
   }
-  return restult;
+  return result;
 }
+
+}
+
+/*
+public String decryptmessage(int privateKey, int publicKey, String message){
+
+   String[] messageArray = message.split(",");
+   String result= "";
+   for(int i =0; i< messageArray.length; i++)
+   {
+    int message_ = Integer.valueOf(messageArray[i]);
+    long decryptmessage = (math.powerOfN(message_, privateKey)%publicKey);
+    result += math.anciiToChar(decryptmessage);
+  }
+
+  // System.out.println("message: "+ message_ + "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
+//   System.out.println("restul: "+ decryptmessage);
+   return result;
+  }
+*/
 
 /*
 public int createPrivateKey(int ggd, int modules)
@@ -70,7 +85,3 @@ public int createPrivateKey(int ggd, int modules)
   return privateKey.get(privateKey.size()-1);
 }
 */
-
-
-
-}

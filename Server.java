@@ -50,21 +50,22 @@ public class Server {
       this.clients.add(newUser);
       // Welcome msg
       newUser.getOutStream().println("Welcome");
-
+      this.sendPublicKey(newUser);
       // create a new thread for newUser incoming messages handling
       new Thread(new UserHandler(this, newUser)).start();
     }
   }
 
   public void sendPublicKey(User sender){
-    for(User client : this.clients){
-      if(client != sender){
-    //    this.sendMessageToUser(sender.public, client, sender.getNickname());
-        client.getOutStream().println(
-            "(<b>Private</b>)" + sender.toString() + "<span>: " + sender.publicKey+"</span>");
-
-
-    }
+    for(User client : this.clients)
+    {
+      if(client != sender)
+      {
+         client.receivePublicKey(sender.givePublicKey());
+         client.receiveModules(sender.giveModules());
+         sender.receiveModules(client.giveModules());
+         sender.receivePublicKey(client.givePublicKey());
+       }
     }
   }
 
@@ -75,17 +76,13 @@ public class Server {
 
   // send incoming msg to all Users
   public void broadcastMessages(String msg, User userSender) {
-    String temp = userSender.getEncryptedMessage(msg);
+    String messageEncrypted = userSender.encryptTheMessage(msg);
     for (User client : this.clients) {
-     String temp2   = client.getDecryptedMessage(temp);
+     String messageDecrypted   = client.decryptTheMessage(messageEncrypted);
       userSender.getOutStream().println(
-         userSender.toString() + "<span>: " +"encryptedMessage: " +temp  +"</span>");
+         userSender.toString() + "<span>: " +"encryptedMessage: " +messageEncrypted  +"</span>");
       client.getOutStream().println(
-         userSender.toString() + "<span>: " +"decryptmessage: " +temp2  +"</span>");
-
-  //  for (User client : this.clients) {
-    //  client.getOutStream().println(
-      //    userSender.toString() + "<span>: " + msg+"</span>");
+         userSender.toString() + "<span>: " +"decryptmessage: " +messageDecrypted +"</span>");
     }
   }
 

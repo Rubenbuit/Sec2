@@ -23,13 +23,13 @@ public class User  {
   private String nickname;
   private Socket client;
   private String color;
-  public int myPublicKey =5;
+  public int myPublicKey;
   private int otherPublicKey;
-  private int privateKey;
+  private int myPrivateKey;
   public int myModules;
   private int otherModules;
-  private int primeNumberA =7  ;
-  private int primeNumberB  =2;
+  private int primeNumberA;
+  private int primeNumberB;
   private int commonFactor;
   Rsa rsa = new Rsa();
   Wiskunde w = new Wiskunde();
@@ -44,29 +44,22 @@ public class User  {
     this.color = ColorInt.getColor(this.userId);
     nbUser += 1;
 
-    //gedeelt wordt myModules en myPublicKey
-
-
-
-  //  primeNumberA = w.createPrimeNumber();
-  //  primeNumberB = w.createPrimeNumber();
+    primeNumberA = w.createPrimeNumber();
+    primeNumberB = w.createPrimeNumber();
     myModules = primeNumberA * primeNumberB;
     // common factor moet nog anders genoemd worden
     commonFactor = (primeNumberA -1) *(primeNumberB -1);
-
-
-
-
-  //  privateKey = rsa.createPrivateKey(commonFactor, modulesNumber);
-    /*
+    myPublicKey = 5;
+    myPrivateKey = rsa.createPrivateKey(myPublicKey,commonFactor);
+/*
     System.out.println("ggd: " +commonFactor);
     System.out.println("primeA: " +primeNumberA +" primeB: "+primeNumberB);
-    System.out.println("modules: " +modulesNumber);
-    System.out.println("publickey: " + publicKey );
-    System.out.println("privatekey: "+ privateKey);
+    System.out.println("modules: " +myModules);
+    System.out.println("publickey: " + myPublicKey);
+    System.out.println("privatekey: "+ myPrivateKey);
 */
 }
-  // getteur
+
   public PrintStream getOutStream(){
     return this.streamOut;
   }
@@ -77,21 +70,15 @@ public class User  {
 
   public String encryptTheMessage(String message)
   {
-
    return rsa.encryptmessage(message, otherPublicKey, otherModules);
-
   }
 
-  public String getDecryptedMessage(String message){
-
-    // private key voor decrypten omet nog verzonnen worden
-    return rsa.decryptmessage(privateKey, publicKey, message);
-
+  public String decryptTheMessage(String message)
+  {
+    return rsa.decryptmessage(message, myPrivateKey, myModules);
   }
 
-  public int givePublicKey(){
-    return this.myPublicKey;
-  }
+
 
   public void receivePublicKey(int key){
     this.otherPublicKey = key;
@@ -99,6 +86,10 @@ public class User  {
 
   public void receiveModules(int modules){
     this.otherModules = modules;
+  }
+
+  public int givePublicKey(){
+    return this.myPublicKey;
   }
 
   public int giveModules(){
