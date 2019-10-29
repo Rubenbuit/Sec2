@@ -12,7 +12,7 @@ public String encryptmessage(String message, int otherPublicKey, int otherModule
   {
     int ancii = math.charToAnciiInt(message.charAt(i));
     long encryptedChar = (math.powerOfN(ancii, otherPublicKey))%otherModules;
-    System.out.println(encryptedChar);
+    System.out.println("char verstuurd" +encryptedChar);
     result +=( String.valueOf(Math.round(encryptedChar))+ ",");
   }
   return result;
@@ -27,7 +27,7 @@ public String decryptmessage(String message, int myPrivateKey, int mypublicModul
  {
    int charValueEncrypted = Integer.valueOf(fullMessage[i]);
    long charValueDecrypted = (math.powerOfN(charValueEncrypted, myPrivateKey) % mypublicModules);
-   System.out.println("math 2"+charValueDecrypted);
+   System.out.println("char teruggekregen"+charValueDecrypted);
    decryptedMessage += math.anciiToChar(charValueDecrypted);
  }
  return decryptedMessage;
