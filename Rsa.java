@@ -5,22 +5,25 @@ import java.util.*;
 public class Rsa{
 Wiskunde math = new Wiskunde();
 
-public String encryptmessage(int privateKey,int publicKey, String message){
-  String restult="";
-  for(int i = 0; i< message.length();i++){
+public String encryptmessage(String message, int otherPublicKey, int otherModules)
+{
+  String result="";
+  for(int i = 0; i< message.length();i++)
+  {
     int ancii = math.charToAnciiInt(message.charAt(i));
-    long encryptedMessage = (math.powerOfN(ancii, privateKey))%publicKey;
-
-  //  System.out.println("ancii: "+ ancii + " privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(ancii, privateKeyd));
-//    System.out.println("verstuurd bericht: " + encryptedMessage);
-
-//    restult +=( String.valueOf(Math.round(encryptedMessage)));// temp
+    long encryptedChar = (math.powerOfN(ancii, otherPublicKey))%otherModules;
     restult +=( String.valueOf(Math.round(encryptedMessage))+ ",");
   }
-return restult;
+  return result;
+
+}
+public String decryptmessage(String message, int myPrivateKey, int mypublicModules)
+{
+//  encryptedchar ^ myprivate key  mod  my publicmodules
 }
 
 public String decryptmessage(int privateKey, int publicKey, String message){
+
    String[] messageArray = message.split(",");
    String result= "";
    for(int i =0; i< messageArray.length; i++)
@@ -35,7 +38,25 @@ public String decryptmessage(int privateKey, int publicKey, String message){
    return result;
   }
 
+public int createPrivateKey(int myPublicKey, int myCommonFactor)
+{
+   // mypublickey * ? mod commonFactor =1
+  int result = 0;
+  boolean isKeyFound = false;
+  int unknown =1;
+  while(isKeyFound == false)
+  {
+    if((myPublicKey * unknown)% myCommonFactor ==1)
+    {
+      result = unknown;
+      isKeyFound = true;
+    }
+    else{unknown +=1;}
+  }
+  return restult;
+}
 
+/*
 public int createPrivateKey(int ggd, int modules)
 {
   List<Integer> privateKey = new ArrayList<Integer>();
@@ -48,8 +69,7 @@ public int createPrivateKey(int ggd, int modules)
   }
   return privateKey.get(privateKey.size()-1);
 }
-
-
+*/
 
 
 

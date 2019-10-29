@@ -23,10 +23,12 @@ public class User  {
   private String nickname;
   private Socket client;
   private String color;
-  public int publicKey;
+  public int myPublicKey =5;
+  private int otherPublicKey;
   private int privateKey;
-  private int modulesNumber;
-  private int primeNumberA =7 ;
+  public int myModules;
+  private int otherModules;
+  private int primeNumberA =7  ;
   private int primeNumberB  =2;
   private int commonFactor;
   Rsa rsa = new Rsa();
@@ -42,13 +44,20 @@ public class User  {
     this.color = ColorInt.getColor(this.userId);
     nbUser += 1;
 
-    //primeNumberA = rsa.createPrimeNumber();
-  //  primeNumberB = rsa.createPrimeNumber();
-    modulesNumber = primeNumberA * primeNumberB;
+    //gedeelt wordt myModules en myPublicKey
+
+
+
+  //  primeNumberA = w.createPrimeNumber();
+  //  primeNumberB = w.createPrimeNumber();
+    myModules = primeNumberA * primeNumberB;
+    // common factor moet nog anders genoemd worden
     commonFactor = (primeNumberA -1) *(primeNumberB -1);
 
-    publicKey = modulesNumber;
-    privateKey = rsa.createPrivateKey(commonFactor, modulesNumber);
+
+
+
+  //  privateKey = rsa.createPrivateKey(commonFactor, modulesNumber);
     /*
     System.out.println("ggd: " +commonFactor);
     System.out.println("primeA: " +primeNumberA +" primeB: "+primeNumberB);
@@ -66,10 +75,10 @@ public class User  {
     return this.streamIn;
   }
 
-  public String getEncryptedMessage(String message)
+  public String encryptTheMessage(String message)
   {
 
-   return rsa.encryptmessage(privateKey, publicKey, message);
+   return rsa.encryptmessage(message, otherPublicKey, otherModules);
 
   }
 
@@ -80,9 +89,22 @@ public class User  {
 
   }
 
-  public int getPublicKey(){
-    return this.publicKey;
+  public int givePublicKey(){
+    return this.myPublicKey;
   }
+
+  public void receivePublicKey(int key){
+    this.otherPublicKey = key;
+  }
+
+  public void receiveModules(int modules){
+    this.otherModules = modules;
+  }
+
+  public int giveModules(){
+    return this.myModules;
+  }
+
 
   public String getNickname(){
     return this.nickname;
