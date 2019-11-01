@@ -1,11 +1,33 @@
 import java.util.Random;
 
+/*
+
+Ruben Buitendijk
+0890813
+01-11-2019
+
+In Server.java is de summery te lezen
+
+omdat er geen wiskunde libraries gebruikt mochten worden is deze klasse gemaakt.
+dit om machtverheffingen te doen.
+en priemgetallen te creeren/ vinden.
+
+ook was het orginele idee om de ancii tabel te gebruiken
+maar omadt dit grote waardes ( a is bijvoorbeeld rond de 90) gaf bij machtheffingen is dit gebruikt
+ echter omdat de modules soms te klein blijft kan hij niet alle characters ontcijferen.
+
+
+*/
+
 public class Wiskunde{
 
+/*
+deze functie is om machtsverheffingen te doen.
+*/
   public static long powerOfN(int number, int power)
   {
     if(power == 0) {return 1;}
-    int result = number;
+    long result = number;
 
     while(power > 1)
     {
@@ -15,7 +37,10 @@ public class Wiskunde{
     return (long)result;
   }
 
-  //converting a string into int
+/*
+deze functie is om de characters naar getallen te veranderen
+*/
+
   public int charToAnciiInt( char message){
      if(message == 'a'|| message == 'A'){return 1;}
      else if( message == 'b' || message == 'B' ){ return 2;}
@@ -48,7 +73,9 @@ public class Wiskunde{
      else {return 27;}
   }
 
-  //convert int back to string
+/*
+deze functie veranderd een encrypte waarde terug naar een character
+*/
   public String anciiToChar( long message){
     if(message == 1){return "a";}
     else if (message ==2 ){ return "b";}
@@ -84,14 +111,18 @@ public class Wiskunde{
   }
 
 
-
+/*
+ met deze functie word een random getal gecreerd, vervolgens ordt er geken met default:
+   isprime functie of dit echt een priemgetal is. als dit niet het geval is wordt er
+   een nieuw getal gecreerd en zal er opnieuw gekeken worden.
+*/
   public int createPrimeNumber(){
     boolean isPrimeFound = false;
     Random r = new Random();
     int primeNumber = 0;
     while(isPrimeFound == false)
     {
-      int testPrimeNumber = r.nextInt(20);
+      int testPrimeNumber = r.nextInt(12);
       if( isPrime(testPrimeNumber) == true)
       {
         isPrimeFound = true;
@@ -101,6 +132,9 @@ public class Wiskunde{
     return primeNumber;
   }
 
+/*
+dit is de functie waar er geken word of het echt een priemgetal is.
+*/
   public static boolean isPrime(int inputNum){
         if (inputNum <= 3 || inputNum % 2 == 0)
             return inputNum == 2 || inputNum == 3;

@@ -1,44 +1,76 @@
 import java.util.Random;
 import java.util.*;
 
+/*
 
+Ruben Buitendijk
+0890813
+01-11-2019
+
+In Server.java is de summery te lezen
+
+*/
+
+/*
+in deze classe worden de berichten versleuteld en ontsleuteld
+*/
 public class Rsa{
 Wiskunde math = new Wiskunde();
+/*
+ voor het encrypten werkt met deze berekening :
+  ( message^other persons publickey ) mod  other persons modules
+er wordt nu gebruik gemaakt van long, dit had achteraf aangepast kunnen worden naar een biginterger
+om met grotere getallen te kunnen werken
 
+de message wordt per letter gesplitst, vervolgesn wordt de ancii waarde berekend en wordt de encryptie gedaan
+vervolgens worden de characters achter elkaar geplakt met een , ertussen
+*/
 public String encryptmessage(String message, int otherPublicKey, int otherModules)
 {
-  System.out.println("op: "+ otherPublicKey + " om: "+otherModules);
   String result="";
   for(int i = 0; i< message.length();i++)
   {
     int ancii = math.charToAnciiInt(message.charAt(i));
-    System.out.println("char value is: " + ancii);
-    System.out.println("power of is: " +math.powerOfN(ancii, otherPublicKey));
     long encryptedChar = (math.powerOfN(ancii, otherPublicKey))%otherModules;
-    System.out.println("char verstuurd" +encryptedChar);
     result +=( String.valueOf(Math.round(encryptedChar))+ ",");
   }
   return result;
-
 }
+
+/*
+ decrypten werkt met de volgende berekening:
+ encryted message ^ mijn private key  modules mijn public key
+
+ de mess wordt eesrt op de , gesplits.
+ vervolgens wordt te berekening gedaan en wordt het resultaat achter elkaar geplakt.
+
+*/
 public String decryptmessage(String message, int myPrivateKey, int mypublicModules)
 {
-//  encryptedchar ^ myprivate key  mod  my publicmodules
  String[] fullMessage = message.split(",");
  String decryptedMessage = "";
  for(int i =0; i< fullMessage.length; i++)
  {
    int charValueEncrypted = Integer.valueOf(fullMessage[i]);
    long charValueDecrypted = (math.powerOfN(charValueEncrypted, myPrivateKey) % mypublicModules);
-   System.out.println("char teruggekregen"+charValueDecrypted);
    decryptedMessage += math.anciiToChar(charValueDecrypted);
  }
  return decryptedMessage;
 }
 
+/*
+ deze functie creerd de private key
+ hiervoor geld
+
+ dat de public key * de unknown privatekey  modules commonFactor
+    de commonfactor zou anders benaamd moeten worden, echter wist ik hier niets voorzichzelf
+    commonfact houdt het volgende in :commonfactor = (primeNumberA -1) *(primeNumberB -1);
+
+de functie begint bij 1 en blift zoeken naar het unknown( privatekey) tot de uitkomst van de som 1 is
+dit zal de private key zijn
+*/
 public int createPrivateKey(int myPublicKey, int myCommonFactor)
 {
-   // mypublickey * ? mod commonFactor =1
   int result = 0;
   boolean isKeyFound = false;
   int unknown =1;
@@ -55,36 +87,3 @@ public int createPrivateKey(int myPublicKey, int myCommonFactor)
 }
 
 }
-
-/*
-public String decryptmessage(int privateKey, int publicKey, String message){
-
-   String[] messageArray = message.split(",");
-   String result= "";
-   for(int i =0; i< messageArray.length; i++)
-   {
-    int message_ = Integer.valueOf(messageArray[i]);
-    long decryptmessage = (math.powerOfN(message_, privateKey)%publicKey);
-    result += math.anciiToChar(decryptmessage);
-  }
-
-  // System.out.println("message: "+ message_ + "privateKey: "+privateKeyd +" publicKey: " +publicKeyd +" math powered" + Math.pow(message_, privateKeyd));
-//   System.out.println("restul: "+ decryptmessage);
-   return result;
-  }
-*/
-
-/*
-public int createPrivateKey(int ggd, int modules)
-{
-  List<Integer> privateKey = new ArrayList<Integer>();
-  for(int i = 2; i< ggd; i++)
-  {
-      if(modules % i != 0)
-      {
-        privateKey.add(i);
-      }
-  }
-  return privateKey.get(privateKey.size()-1);
-}
-*/
